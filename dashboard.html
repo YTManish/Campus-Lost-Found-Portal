@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background:#f5f6fa;
+    }
+
+    /* Mobile button full width */
+    @media(max-width:576px){
+      .btn {
+        width:100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ✅ RESPONSIVE NAVBAR -->
+<nav class="navbar navbar-dark bg-dark px-3 flex-wrap">
+  <span class="navbar-brand">Campus Lost & Found</span>
+
+  <div class="d-flex flex-wrap gap-2 mt-2 mt-md-0">
+    <button class="btn btn-info" onclick="openProfile()">Profile</button>
+    <button class="btn btn-success" onclick="window.location.href='post.html'">+ Add Item</button>
+    <button class="btn btn-danger" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="container-fluid px-3 px-md-4 mt-4">
+
+  <h4 id="welcome"></h4>
+
+  <!-- SEARCH + FILTER -->
+  <div class="row g-2 mb-3">
+    <div class="col-12 col-md-6">
+      <input id="searchInput" class="form-control"
+        placeholder="Search by item name..."
+        onkeyup="loadItems()">
+    </div>
+
+    <div class="col-12 col-md-3">
+      <select id="filterType" class="form-select" onchange="loadItems()">
+        <option value="">All</option>
+        <option value="Lost">Lost</option>
+        <option value="Found">Found</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ✅ RESPONSIVE GRID -->
+  <div id="items" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+
+</div>
+
+<!-- PROFILE PANEL -->
+<div id="profilePanel"
+     style="position:fixed; right:-300px; top:0; width:300px; height:100%;
+     background:white; padding:20px; transition:0.3s;
+     box-shadow:-2px 0 10px rgba(0,0,0,0.2);">
+
+  <h5>Profile</h5>
+
+  <p><b>Name:</b> <span id="pname"></span></p>
+  <p><b>Contact:</b> <span id="pcontact"></span></p>
+  <p><b>Dept:</b> <span id="pdept"></span></p>
+
+  <button class="btn btn-danger w-100" onclick="closeProfile()">Close</button>
+</div>
+
+<script>
+
+let user = JSON.parse(localStorage.getItem("user"));
+
+if(!user){
+  window.location.href = "login.html";
+}
+
+document.getElementById("welcome").innerText =
+  `Welcome, ${user.name || user.username} (${user.department || ""})`;
+
+document.getElementById("pname").innerText =
+  user.name || user.username || "N/A";
+
+document.getElementById("pcontact").innerText =
+  user.contact || "N/A";
+
+document.getElementById("pdept").innerText =
+  user.department || "N/A";
+
+
+async function loadItems(){
+
+  let res = await fetch("http://localhost:3000/items");
+  let items = await res.json();
+
+  let search = document.getElementById("searchInput").value.toLowerCase();
+  let filter = document.getElementById("filterType").value;
+
+  // ✅ SEARCH ONLY BY NAME
+  let filteredItems = items.filter(i => {
+
+    let matchSearch =
+      (i.name || "").toLowerCase().includes(search);
+
+    let matchType = filter ? i.type === filter : true;
+
+    return matchSearch && matchType;
+  });
+
+  let html = "";
+
+  filteredItems.forEach(i => {
+
+    let owner = i.owner;
+
+    if(typeof owner === "string"){
+      try{
+        owner = JSON.parse(owner);
+      }catch{
+        owner = { username: owner };
+      }
+    }
+
+    html += `
+    <div class="col">
+      <div class="card p-3 shadow-sm h-100">
+
+        ${i.image ? `
+          <img src="${i.image}" 
+          style="width:100%; height:200px; object-fit:cover; border-radius:8px; margin-bottom:10px;">
+        ` : ""}
+
+        <h5>${i.name || "No Name"}</h5>
+        <p>${i.desc || "No Description"}</p>
+
+        <b>${i.location || "No Location"}</b><br>
+
+        <small>Owner: ${owner?.username || owner?.name || "unknown"}</small><br>
+
+        ${i.claimStatus === "pending" && i.requestedBy ? `
+          <small class="text-primary">
+            Requested by: ${i.requestedBy.username || i.requestedBy.name}
+          </small><br>
+
+          <small class="text-muted">
+            Contact: ${i.requestedBy.contact || "N/A"}
+          </small><br>
+        ` : ""}
+
+        <span class="badge bg-${i.type=="Lost"?"danger":"success"} mt-1">
+          ${i.type || "Unknown"}
+        </span>
+
+        <div class="mt-2">
+
+        ${i.claimStatus === "available" && user.username !== (owner?.username || owner?.name) ? 
+          `<button class="btn btn-primary btn-sm mt-2 w-100"
+            onclick="claimItem('${i._id}')">
+            Claim
+          </button>`
+        : ""}
+
+        ${i.claimStatus === "pending" ? 
+          `<span class="badge bg-warning mt-2 d-block">Pending</span>`
+        : ""}
+
+        ${i.claimStatus === "approved" ? 
+          `<span class="badge bg-success mt-2 d-block">Approved</span>`
+        : ""}
+
+        ${user.username === (owner?.username || owner?.name) && i.claimStatus === "pending" ? `
+          <div class="mt-2">
+            <button class="btn btn-success btn-sm w-100 mb-1"
+              onclick="approveItem('${i._id}')">
+              Approve
+            </button>
+
+            <button class="btn btn-danger btn-sm w-100"
+              onclick="rejectItem('${i._id}')">
+              Reject
+            </button>
+          </div>
+        ` : ""}
+
+        </div>
+
+      </div>
+    </div>
+    `;
+  });
+
+  document.getElementById("items").innerHTML = html;
+}
+
+loadItems();
+
+
+function openProfile(){
+  document.getElementById("profilePanel").style.right = "0";
+}
+
+function closeProfile(){
+  document.getElementById("profilePanel").style.right = "-300px";
+}
+
+function logout(){
+  localStorage.removeItem("user");
+  window.location.href = "login.html";
+}
+
+
+// CLAIM FUNCTIONS
+async function claimItem(id){
+
+  await fetch("http://localhost:3000/claim", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ itemId: id, user })
+  });
+
+  alert("Claim Requested ✅");
+  loadItems();
+}
+
+async function approveItem(id){
+
+  await fetch("http://localhost:3000/approve", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ itemId: id })
+  });
+
+  alert("Approved ✅");
+  loadItems();
+}
+
+async function rejectItem(id){
+
+  await fetch("http://localhost:3000/reject", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({ itemId: id })
+  });
+
+  alert("Rejected ❌");
+  loadItems();
+}
+
+</script>
+
+</body>
+</html>
