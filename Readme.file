@@ -115,10 +115,23 @@ login.html
 
 ### Option 1: Local MongoDB
 
-```
-mongodb://127.0.0.1:27017/lostfound
-```
+🔹 Local MongoDB Setup
 
+If you are running MongoDB locally:
+
+Make sure MongoDB service is running
+
+Use this connection string in server.js:
+
+mongodb://127.0.0.1:27017/lostfound
+Database will be automatically created when data is inserted
+
+📦 Collections Used
+
+This project uses:
+
+users → Stores user details & roles
+items → Stores lost/found items
 
 ## 🔑 Admin Login
 
