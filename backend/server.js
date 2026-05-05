@@ -8,26 +8,26 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// SERVE IMAGES
+
+
 app.use("/uploads", express.static("uploads"));
 
 
-// ================= MONGODB =================
+// MONGODB 
 mongoose.connect("mongodb://127.0.0.1:27017/lostfound")
 .then(() => console.log("MongoDB Connected"))
 .catch(err => console.log(err));
 
 
-// ================= SCHEMA =================
 
-// ✅ UPDATED USER (ADDED ROLE)
+
 const User = mongoose.model("User", {
   name: String,
   contact: String,
   department: String,
   username: String,
   password: String,
-  role: { type: String, default: "user" } // ✅ NEW
+  role: { type: String, default: "user" } 
 });
 
 const Item = mongoose.model("Item", {
@@ -43,7 +43,7 @@ const Item = mongoose.model("Item", {
 });
 
 
-// ================= MULTER =================
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -56,7 +56,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 
-// ================= ROUTES =================
+
 
 // REGISTER
 app.post("/register", async (req, res) => {
@@ -66,7 +66,7 @@ app.post("/register", async (req, res) => {
 });
 
 
-// ✅ UPDATED LOGIN (ADMIN SUPPORT)
+
 app.post("/login", async (req, res) => {
 
   let { username, password } = req.body;
@@ -77,7 +77,7 @@ app.post("/login", async (req, res) => {
     res.json({
       success: true,
       user,
-      isAdmin: user.role === "admin" // ✅ NEW
+      isAdmin: user.role === "admin" 
     });
   } else {
     res.json({ success: false });
@@ -171,7 +171,7 @@ app.post("/delete-item", async (req, res) => {
 });
 
 
-// ================= SERVER =================
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
@@ -192,7 +192,7 @@ app.post("/delete-user", async (req, res) => {
   res.json({ success: true });
 });
 
-// DELETE USER (SAFE)
+// DELETE USER 
 app.post("/delete-user", async (req, res) => {
 
   let user = await User.findById(req.body.id);
