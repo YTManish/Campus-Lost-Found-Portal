@@ -1,0 +1,179 @@
+# 🎒 Campus Lost & Found Portal
+
+A full-stack web application to help students report and find lost items within a campus.
+
+---
+
+## 🚀 Features
+
+* 🔐 User Registration & Login
+* 📦 Add Lost / Found Items
+* 🖼 Upload Item Images
+* 🔍 Search Items by Title
+* 📍 View Item Details (Location, Description)
+* 🙋 Claim Lost Items
+* 🛠 Admin Panel:
+
+  * Manage Items
+  * Delete Items
+  * Manage Users
+  * Delete Users (Admin Protected)
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+* HTML
+* CSS (Bootstrap)
+* JavaScript
+
+### Backend
+
+* Node.js
+* Express.js
+
+### Database
+
+* MongoDB (Local / Atlas)
+
+### Others
+
+* Multer (Image Upload)
+* CORS
+
+---
+
+## 📁 Project Structure
+
+```
+Campus-Lost-Found-Portal/
+│
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   ├── uploads/
+│   └── node_modules/
+│
+├── login.html
+├── register.html
+├── dashboard.html
+├── post.html
+├── admin.html
+├── users.html
+└── README.md
+```
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1️⃣ Clone Repository
+
+```
+git clone https://github.com/YTManish/Campus-Lost-Found-Portal.git
+cd Campus-Lost-Found-Portal
+```
+
+---
+
+### 2️⃣ Install Backend Dependencies
+
+```
+cd backend
+npm install
+```
+
+---
+
+### 3️⃣ Run Server
+
+```
+node server.js
+```
+
+Server runs on:
+
+```
+http://localhost:3000
+```
+
+---
+
+### 4️⃣ Open Frontend
+
+Use Live Server OR open:
+
+```
+login.html
+```
+
+---
+
+## 🗄 Database Setup
+
+### Option 1: Local MongoDB
+
+```
+mongodb://127.0.0.1:27017/lostfound
+```
+
+
+## 🔑 Admin Login
+
+To access admin panel:
+
+1. Create a user
+2. Manually change role in MongoDB:
+
+```
+role: "admin"
+```
+
+Then login → redirected to Admin Panel
+
+---
+
+## 📦 API Endpoints
+
+| Method | Endpoint     | Description   |
+| ------ | ------------ | ------------- |
+| POST   | /register    | Register user |
+| POST   | /login       | Login user    |
+| POST   | /add-item    | Add item      |
+| GET    | /items       | Get all items |
+| POST   | /claim       | Request claim |
+| POST   | /approve     | Approve claim |
+| POST   | /reject      | Reject claim  |
+| POST   | /delete-item | Delete item   |
+| GET    | /users       | Get users     |
+| POST   | /delete-user | Delete user   |
+
+---
+
+## ⚠️ Notes
+
+* Image uploads stored in `/uploads`
+* Do not upload `node_modules` to GitHub
+* Use `.gitignore` for clean repo
+
+---
+
+## 🌍 Deployment
+
+* Backend: Railway / Render / Vercel (serverless)
+* Database: MongoDB Atlas
+* Frontend: Can be hosted separately
+
+
+---
+
+## 📌 Future Improvements
+
+* JWT Authentication
+* Password Encryption (bcrypt)
+* Email Notifications
+* Chat between users
+* Mobile App Version
+
