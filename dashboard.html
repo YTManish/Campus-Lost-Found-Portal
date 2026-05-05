@@ -12,6 +12,7 @@
     }
 
     /* Mobile button full width */
+    
     @media(max-width:576px){
       .btn {
         width:100%;
@@ -22,7 +23,8 @@
 
 <body>
 
-<!-- ✅ RESPONSIVE NAVBAR -->
+<!--RESPONSIVE NAVBAR -->
+
 <nav class="navbar navbar-dark bg-dark px-3 flex-wrap">
   <span class="navbar-brand">Campus Lost & Found</span>
 
@@ -39,6 +41,7 @@
   <h4 id="welcome"></h4>
 
   <!-- SEARCH + FILTER -->
+
   <div class="row g-2 mb-3">
     <div class="col-12 col-md-6">
       <input id="searchInput" class="form-control"
@@ -55,12 +58,15 @@
     </div>
   </div>
 
-  <!-- ✅ RESPONSIVE GRID -->
+  <!-- RESPONSIVE GRID -->
+
   <div id="items" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
 
 </div>
 
 <!-- PROFILE PANEL -->
+
+
 <div id="profilePanel"
      style="position:fixed; right:-300px; top:0; width:300px; height:100%;
      background:white; padding:20px; transition:0.3s;
@@ -104,7 +110,8 @@ async function loadItems(){
   let search = document.getElementById("searchInput").value.toLowerCase();
   let filter = document.getElementById("filterType").value;
 
-  // ✅ SEARCH ONLY BY NAME
+  
+  
   let filteredItems = items.filter(i => {
 
     let matchSearch =
@@ -218,6 +225,7 @@ function logout(){
 
 
 // CLAIM FUNCTIONS
+
 async function claimItem(id){
 
   await fetch("http://localhost:3000/claim", {
