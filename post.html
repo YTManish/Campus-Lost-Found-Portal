@@ -14,6 +14,7 @@
     }
 
     /* TOP BAR */
+
     .top-bar {
       display: flex;
       justify-content: space-between;
@@ -29,6 +30,7 @@
     }
 
     /* FORM */
+
     .container-box {
       width: 90%;
       max-width: 420px;
@@ -78,7 +80,7 @@
       margin-bottom: 10px;
     }
 
-    /* 🔥 MOBILE FIX */
+    /* MOBILE FIX */
     @media(max-width:576px){
 
       .top-bar {
@@ -99,6 +101,7 @@
 </div>
 
 <!-- FORM -->
+
 <div class="container-box">
 
   <h2>📦 Add Item</h2>
@@ -132,6 +135,7 @@
 <script>
 
 // PREVIEW IMAGE
+
 function previewImage(){
   let file = document.getElementById("image").files[0];
   let preview = document.getElementById("preview");
@@ -149,6 +153,7 @@ function clearImage(){
 }
 
 // SUBMIT
+
 async function addItem(e){
   e.preventDefault();
 
