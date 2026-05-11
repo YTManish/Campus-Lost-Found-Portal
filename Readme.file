@@ -1,60 +1,51 @@
 # 🎒 Campus Lost & Found Portal
 
-A full-stack web application to help students report and find lost items within a campus.
+A simple web application for students to post and find lost or found items inside the campus.
 
 ---
 
 ## 🚀 Features
 
-* 🔐 User Registration & Login
-* 📦 Add Lost / Found Items
-* 🖼 Upload Item Images
-* 🔍 Search Items by Title
-* 📍 View Item Details (Location, Description)
-* 🙋 Claim Lost Items
-* 🛠 Admin Panel:
-
-  * Manage Items
-  * Delete Items
-  * Manage Users
-  * Delete Users (Admin Protected)
+- User Registration & Login
+- Add Lost / Found Items
+- Upload Item Images
+- Search Items
+- Claim Lost Items
+- Admin Panel
+- Manage Users & Items
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Technologies Used
 
 ### Frontend
-
-* HTML
-* CSS (Bootstrap)
-* JavaScript
+- HTML
+- CSS
+- Bootstrap
+- JavaScript
 
 ### Backend
-
-* Node.js
-* Express.js
+- Node.js
+- Express.js
 
 ### Database
+- MongoDB
 
-* MongoDB (Local / Atlas)
-
-### Others
-
-* Multer (Image Upload)
-* CORS
+### Other Packages
+- Multer
+- CORS
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Files
 
-```
+```bash
 Campus-Lost-Found-Portal/
 │
 ├── backend/
 │   ├── server.js
 │   ├── package.json
 │   ├── uploads/
-│   └── node_modules/
 │
 ├── login.html
 ├── register.html
@@ -63,130 +54,41 @@ Campus-Lost-Found-Portal/
 ├── admin.html
 ├── users.html
 └── README.md
-```
 
----
+## How to run Project
 
-## ⚙️ Installation & Setup
-
-### 1️⃣ Clone Repository
-
-```
+Clone Repository
 git clone https://github.com/YTManish/Campus-Lost-Found-Portal.git
-cd Campus-Lost-Found-Portal
-```
 
----
-
-### 2️⃣ Install Backend Dependencies
-
-```
+# Install packages
 cd backend
 npm install
-```
 
----
-
-### 3️⃣ Run Server
-
-```
+# Start Server
 node server.js
-```
 
-Server runs on:
+# Next open Frontend Register.html / Login.html
 
-```
-http://localhost:3000
-```
-
----
-
-### 4️⃣ Open Frontend
-
-Use Live Server OR open:
-
-```
-login.html
-```
-
----
-
-## 🗄 Database Setup
-
-### Option 1: Local MongoDB
-
-🔹 Local MongoDB Setup
-
-If you are running MongoDB locally:
-
-Make sure MongoDB service is running
-
-Use this connection string in server.js:
-
+## Mongo DB Connection
 mongodb://127.0.0.1:27017/lostfound
-Database will be automatically created when data is inserted
+use this connetion
 
-📦 Collections Used
+Database and collections will be created automatically.
 
-This project uses:
+#Collections used:
+users
+items
 
-users → Stores user details & roles
-items → Stores lost/found items
+## For admin user 
+Go to admin and in users collection, go to Add Data and paste this admin id
 
-## 🔑 Admin Login
+{
+  "name": "Admin",
+  "contact": "9999999999",
+  "department": "Admin",
+  "username": "admin",
+  "password": "admin",
+  "role": "admin"
+}
 
-To access admin panel:
-
-1. Create a user
-2. Manually change role in MongoDB:
-
-```
-role: "admin"
-```
-
-Then login → redirected to Admin Panel
-
----
-
-## 📦 API Endpoints
-
-| Method | Endpoint     | Description   |
-| ------ | ------------ | ------------- |
-| POST   | /register    | Register user |
-| POST   | /login       | Login user    |
-| POST   | /add-item    | Add item      |
-| GET    | /items       | Get all items |
-| POST   | /claim       | Request claim |
-| POST   | /approve     | Approve claim |
-| POST   | /reject      | Reject claim  |
-| POST   | /delete-item | Delete item   |
-| GET    | /users       | Get users     |
-| POST   | /delete-user | Delete user   |
-
----
-
-## ⚠️ Notes
-
-* Image uploads stored in `/uploads`
-* Do not upload `node_modules` to GitHub
-* Use `.gitignore` for clean repo
-
----
-
-## 🌍 Deployment
-
-* Backend: Railway / Render / Vercel (serverless)
-* Database: MongoDB Atlas
-* Frontend: Can be hosted separately
-
-
----
-
-## 📌 Future Improvements
-
-* JWT Authentication
-* Password Encryption (bcrypt)
-* Email Notifications
-* Chat between users
-* Mobile App Version
-
+Username and pasword mentioned here in id.
