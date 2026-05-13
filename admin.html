@@ -7,88 +7,143 @@
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
   <style>
-    body {
-      background: #f4f6f9;
-      font-family: 'Segoe UI', sans-serif;
+
+    body{
+      background:#f5f5f5;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    /* SIDEBAR */
+    /* NAVBAR */
 
-    .sidebar {
-      width: 220px;
-      height: 100vh;
-      position: fixed;
-      background: #111827;
-      color: white;
-      padding: 20px;
+    .navbar{
+      background:black;
+      padding:15px 0;
     }
 
-    .sidebar h4 {
-      margin-bottom: 30px;
+    .navbar-brand{
+      color:white !important;
+      font-size:28px;
+      font-weight:bold;
     }
 
-    .sidebar a {
-      display: block;
-      color: #cbd5e1;
-      text-decoration: none;
-      margin-bottom: 15px;
-      padding: 8px;
-      border-radius: 6px;
+    /* HERO */
+
+    .hero{
+      background:linear-gradient(to right,#000,#1f1f1f);
+      color:white;
+      padding:50px 20px;
+      border-radius:0 0 20px 20px;
+      margin-bottom:30px;
     }
 
-    .sidebar a:hover {
-      background: #1f2937;
-      color: white;
+    .hero h1{
+      font-size:42px;
+      font-weight:900;
     }
 
-    /* MAIN */
-
-    .main {
-      margin-left: 240px;
-      padding: 20px;
+    .hero p{
+      color:#ccc;
     }
 
-    .card {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-      transition: 0.3s;
-      height: 100%;
+    /* SEARCH BOX */
+
+    .search-box{
+      background:white;
+      padding:20px;
+      border-radius:15px;
+      margin-top:-40px;
+      position:relative;
+      z-index:10;
+      box-shadow:0 5px 20px rgba(0,0,0,0.1);
     }
 
-    .card:hover {
-      transform: translateY(-5px);
+    /* PRODUCT CARD */
+
+    .product-card{
+      background:white;
+      border-radius:18px;
+      overflow:hidden;
+      border:1px solid #eee;
+      transition:0.3s;
+      height:100%;
     }
 
-    .delete-btn {
-      width: 100%;
-      border-radius: 8px;
+    .product-card:hover{
+      transform:translateY(-8px);
+      box-shadow:0 10px 25px rgba(0,0,0,0.15);
     }
 
-    /* MOBILE FIX */
+    .product-img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      background:#f2f2f2;
+    }
 
+    .top-tag{
+      position:absolute;
+      top:12px;
+      left:12px;
+      background:black;
+      color:white;
+      padding:6px 12px;
+      border-radius:20px;
+      font-size:11px;
+      font-weight:bold;
+    }
+
+    .feature-strip{
+      background:#ffd400;
+      padding:8px 12px;
+      display:flex;
+      justify-content:space-between;
+      font-size:13px;
+      font-weight:bold;
+    }
+
+    .product-body{
+      padding:15px;
+    }
+
+    .product-title{
+      font-size:20px;
+      font-weight:800;
+      margin-bottom:5px;
+    }
+
+    .desc{
+      color:#666;
+      min-height:45px;
+      font-size:14px;
+    }
+
+    .location{
+      font-weight:bold;
+      margin-bottom:5px;
+    }
+
+    .delete-btn{
+      width:100%;
+      border-radius:10px;
+      margin-top:10px;
+    }
+
+    /* MOBILE */
 
     @media(max-width:768px){
 
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
+      .hero h1{
+        font-size:30px;
       }
 
-      .main {
-        margin-left: 0;
+      .product-img{
+        height:180px;
       }
 
-    }
-
-    /* Mobile buttons full width */
-
-    @media(max-width:576px){
-      .btn {
-        width: 100%;
-      }
     }
 
   </style>
@@ -96,74 +151,216 @@
 
 <body>
 
-<!-- SIDEBAR -->
+<!-- NAVBAR -->
 
-<div class="sidebar">
-  <h4>⚙ Admin</h4>
+<nav class="navbar navbar-dark px-3">
 
-  <a href="#">📦 Manage Items</a>
-  <a href="users.html">👤 Users</a>
-  <a href="#" onclick="logout()">🚪 Logout</a>
-</div>
+  <div class="container-fluid">
 
-<!-- MAIN -->
+    <span class="navbar-brand">
+      Campus Lost & Found
+    </span>
 
-<div class="main">
+    <div class="d-flex gap-2 flex-wrap">
 
-  <div class="topbar d-flex justify-content-between mb-3 flex-wrap">
-    <h3>Manage Items</h3>
+      <button class="btn btn-primary"
+        onclick="window.location.href='users.html'">
+        Users
+      </button>
+
+      <button class="btn btn-danger"
+        onclick="logout()">
+        Logout
+      </button>
+
+    </div>
+
   </div>
 
-  <!-- RESPONSIVE GRID -->
+</nav>
 
-  <div id="items" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
+<!-- HERO -->
+
+<div class="hero text-center">
+
+  <h1>Admin Control Panel</h1>
+
+  <p>
+    Manage all lost & found items easily
+  </p>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="container">
+
+  <div class="search-box">
+
+    <div class="row g-2">
+
+      <div class="col-md-8">
+        <input id="searchInput"
+          class="form-control"
+          placeholder="Search item..."
+          onkeyup="loadItems()">
+      </div>
+
+      <div class="col-md-4">
+        <select id="filterType"
+          class="form-select"
+          onchange="loadItems()">
+
+          <option value="">All Items</option>
+          <option value="Lost">Lost</option>
+          <option value="Found">Found</option>
+
+        </select>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ITEMS -->
+
+<div class="container mt-5">
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+
+    <h2 class="fw-bold">
+      📦 Manage Items
+    </h2>
+
+  </div>
+
+  <div id="items"
+    class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+  </div>
 
 </div>
 
 <script>
 
-// check admin
+// CHECK ADMIN
 
 if(!localStorage.getItem("admin")){
   window.location.href = "login.html";
 }
 
-// load items
+
+// LOAD ITEMS
 
 async function loadItems(){
 
   let res = await fetch("http://localhost:3000/items");
+
   let items = await res.json();
+
+  let search =
+    document.getElementById("searchInput")
+    .value.toLowerCase();
+
+  let filter =
+    document.getElementById("filterType").value;
+
+  let filteredItems = items.filter(i => {
+
+    let matchSearch =
+      (i.name || "")
+      .toLowerCase()
+      .includes(search);
+
+    let matchType =
+      filter ? i.type === filter : true;
+
+    return matchSearch && matchType;
+  });
 
   let html = "";
 
-  items.forEach(i => {
+  filteredItems.forEach(i => {
+
+    let owner = i.owner;
+
+    if(typeof owner === "string"){
+      try{
+        owner = JSON.parse(owner);
+      }catch{
+        owner = { username: owner };
+      }
+    }
 
     html += `
+
     <div class="col">
-      <div class="card p-3">
 
-        ${i.image ? `
-          <img src="${i.image}" 
-          style="width:100%; height:200px; object-fit:cover; border-radius:10px; margin-bottom:10px;">
-        ` : ""}
+      <div class="product-card">
 
-        <h5>${i.name || "No Name"}</h5>
-        <p class="text-muted">${i.desc || "No Description"}</p>
+        <div style="position:relative;">
 
-        <b>${i.location || "No Location"}</b><br>
+          ${i.image ? `
+            <img src="${i.image}"
+            class="product-img">
+          ` : `
+            <img src="https://via.placeholder.com/400x300?text=No+Image"
+            class="product-img">
+          `}
 
-        <span class="badge bg-${i.type=="Lost"?"danger":"success"} mb-2">
-          ${i.type}
-        </span>
+          <div class="top-tag">
+            ${i.type}
+          </div>
 
-        <button class="btn btn-danger delete-btn mt-2"
-          onclick="deleteItem('${i._id}')">
-          Delete Item
-        </button>
+        </div>
+
+        <div class="feature-strip">
+
+          ${i.location || "Unknown"}
+
+          <span>
+            ${i.claimStatus === "approved"
+              ? "✅ Approved"
+              : i.claimStatus === "pending"
+              ? "⏳ Pending"
+              : "📦 Available"}
+          </span>
+
+        </div>
+
+        <div class="product-body">
+
+          <div class="product-title">
+            ${i.name || "No Name"}
+          </div>
+
+          <div class="desc">
+            ${i.desc || "No Description"}
+          </div>
+
+          <div class="location">
+            📍 ${i.location || "No Location"}
+          </div>
+
+          <small class="text-muted d-block mb-2">
+            Owner:
+            ${owner?.username || owner?.name || "Unknown"}
+          </small>
+
+          <button class="btn btn-danger delete-btn"
+            onclick="deleteItem('${i._id}')">
+
+            Delete Item
+
+          </button>
+
+        </div>
 
       </div>
+
     </div>
+
     `;
   });
 
@@ -173,28 +370,36 @@ async function loadItems(){
 loadItems();
 
 
-// DELETE
+// DELETE ITEM
 
 async function deleteItem(id){
 
   if(!confirm("Delete this item?")) return;
 
   await fetch("http://localhost:3000/delete-item", {
+
     method: "POST",
-    headers: {"Content-Type":"application/json"},
+
+    headers: {
+      "Content-Type":"application/json"
+    },
+
     body: JSON.stringify({ id })
+
   });
 
   alert("Item Deleted ✅");
+
   loadItems();
 }
 
 
 // LOGOUT
 
-
 function logout(){
+
   localStorage.removeItem("admin");
+
   window.location.href = "login.html";
 }
 
